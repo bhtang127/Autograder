@@ -68,7 +68,7 @@ if __name__ ==  "__main__":
     records_dir = args.prefix + "_scores.csv"
     id_name = pd.read_csv(args.i)
     id_name["last name"] = id_name["last name"].str.capitalize()
-    id_name = id_name.sort_values("last name")
+    id_name = id_name.sort_values(["last name", "first name", "github username"]).reset_index(drop=True)
     records = pd.DataFrame({
         "last name": id_name["last name"], 
         "first name": id_name["first name"], 
@@ -87,7 +87,7 @@ if __name__ ==  "__main__":
                     records_old,
                     how="left",
                     on=["last name", "first name", "github username"]
-                ).sort_values("last name")
+                ).sort_values(["last name", "first name", "github username"]).reset_index(drop=True)
                 logging.info("Merged existing records")
             except:
                 pass
@@ -146,8 +146,11 @@ if __name__ ==  "__main__":
         rule_names = []
         AUTOGRADING = False
     
-    for i, gid in enumerate(id_in_records):
+    for i, gid in enumerate(records["github username"]):
         if gid not in id_in_directory:
+            continue
+        # do not re-grade
+        if pd.notna(records.at[i, "score"]):
             continue
         print("Start grading id `%s` (%d out of %d):"%(gid, i+1, len(assigments)))
         path_i = os.path.join(args.d, gid)
