@@ -3,6 +3,7 @@ This is a grading assistant for course ds4ph.
 
 Requirement: pandas
 
+```
 Usage: python3 autograder.py [-h] [-i ID] [-d DIRECTORY] [-r RULE] [-p PREFIX] [-l LOG]
 
 optional arguments:
@@ -15,6 +16,6 @@ optional arguments:
                         The name of the file with scores will be prefix_scores.csv, this file
                         will be generated in your current directory
   -l LOG, --log LOG     The name and path for the logging file (default: scores.log)
-
+```
 
 
